@@ -21,7 +21,6 @@ import br.com.flexait.cdi.integration.Jpa;
 public class ModelTest {
 	
 	@Inject	Db db;
-	@Inject Jpa jpa;
 	@Inject ContextController ctx;
 	private ModelImpl model;
 	
@@ -36,34 +35,33 @@ public class ModelTest {
 	@After
 	public void tearDown() throws Exception {
 		db.clean();
+		db.commit();
 		ctx.closeRequest();
 	}
 	
 	@Test
 	public void shouldSaveAModelImplementation() throws Exception {
-		ModelImpl merged = jpa.begin().merge(model);
-		jpa.commit();
+		ModelImpl merged = db.em().merge(model);
 		
 		assertThat(merged.getId(), notNullValue());
 	}
 	
 	@Test
 	public void shouldConfigDateOnInsert() {
-		ModelImpl merged = jpa.begin().merge(model);
-		jpa.commit();
+		ModelImpl merged = db.em().merge(model);
 		
 		assertThat(merged.getCreatedAt(), notNullValue());
 	}
 	
 	@Test
 	public void shouldConfigDateOnUpdate() {
-		EntityManager em = jpa.begin();
-		ModelImpl merged = em.merge(model);
+		ModelImpl merged = db.em().merge(model);
 		assertThat(merged.getUpdatedAt(), nullValue());
+		db.commit();
 		
 		merged.name = "Bar";
-		em.merge(model);
-		jpa.commit();
+		merged = db.em().merge(merged);
+		db.commit();
 		assertThat(merged.getUpdatedAt(), notNullValue());
 	}
 
