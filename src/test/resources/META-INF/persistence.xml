@@ -11,7 +11,7 @@
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
-			<property name="hibernate.dialect" value="br.com.flexait.crud.model.TemporaryHSQLDBDialect"/>
+			<property name="hibernate.dialect" value="br.com.flexait.cdi.dialect.TemporaryHSQLDBDialect"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:crud" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="" />

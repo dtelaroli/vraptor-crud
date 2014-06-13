@@ -1,8 +1,16 @@
 package br.com.caelum.vraptor.crud.model;
 
+import java.util.Calendar;
+
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 public abstract class Model implements IModel {
@@ -11,6 +19,15 @@ public abstract class Model implements IModel {
 	
 	@Id @GeneratedValue
 	protected Long id;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
+	@Column(updatable = false)
+	private Calendar createdAt;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
+	private Calendar updatedAt;
 	
 	public Model() {
 	}
@@ -26,10 +43,28 @@ public abstract class Model implements IModel {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public Calendar getCreatedAt() {
+		return createdAt;
+	}
+
+	public Calendar getUpdatedAt() {
+		return updatedAt;
+	}
 
 	@Override
 	public String toString() {
 		return "Model [id=" + id + "]";
+	}
+	
+	@PrePersist
+	public void beforeInsert() {
+		createdAt = Calendar.getInstance();
+	}
+	
+	@PreUpdate
+	public void beforeUpdate() {
+		updatedAt = Calendar.getInstance();
 	}
 	
 }
