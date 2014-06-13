@@ -1,0 +1,4 @@
+<dataset>
+    <ModelImpl name="John"/>
+    <ModelImpl name="Petter"/>
+</dataset>

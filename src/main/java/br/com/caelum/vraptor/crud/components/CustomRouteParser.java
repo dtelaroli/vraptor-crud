@@ -11,6 +11,10 @@ import br.com.caelum.vraptor.http.route.Router;
 @Specializes @ApplicationScoped
 public class CustomRouteParser extends PathAnnotationRoutesParser {
  
+	@SuppressWarnings("deprecation")
+	public CustomRouteParser() {
+	}
+	
 	@Inject
 	public CustomRouteParser(Router router) {
 		super(router);

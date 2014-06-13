@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class Model implements IModel {
+public abstract class Model implements IModel {
 
 	private static final long serialVersionUID = 2150386543436864041L;
 	
