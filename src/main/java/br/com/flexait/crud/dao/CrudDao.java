@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.crud.dao;
+package br.com.flexait.crud.dao;
 
 import java.util.List;
 

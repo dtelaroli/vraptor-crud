@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.crud.components;
+package br.com.flexait.crud.components;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Specializes;

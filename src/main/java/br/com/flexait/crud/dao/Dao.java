@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.crud.dao;
+package br.com.flexait.crud.dao;
 
 import static java.lang.annotation.ElementType.*;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.crud.dao;
+package br.com.flexait.crud.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -11,7 +11,7 @@ import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
 
-import br.com.caelum.vraptor.crud.model.IModel;
+import br.com.flexait.crud.model.IModel;
 
 public class DaoProducer implements Serializable {
 	

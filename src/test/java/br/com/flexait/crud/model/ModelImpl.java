@@ -2,7 +2,7 @@ package br.com.flexait.crud.model;
 
 import javax.persistence.Entity;
 
-import br.com.caelum.vraptor.crud.model.Model;
+import br.com.flexait.crud.model.Model;
 
 @Entity
 public class ModelImpl extends Model {

@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.crud.model;
+package br.com.flexait.crud.model;
 
 import java.util.Calendar;
 

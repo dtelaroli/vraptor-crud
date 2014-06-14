@@ -7,7 +7,6 @@
 	
 	<persistence-unit name="test">
 		<class>br.com.flexait.crud.model.ModelImpl</class>
-		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />

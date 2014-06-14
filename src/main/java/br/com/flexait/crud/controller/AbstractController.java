@@ -1,11 +1,11 @@
-package br.com.caelum.vraptor.crud.controller;
+package br.com.flexait.crud.controller;
 
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.crud.dao.CrudDao;
-import br.com.caelum.vraptor.crud.dao.Dao;
-import br.com.caelum.vraptor.crud.model.IModel;
+import br.com.flexait.crud.dao.CrudDao;
+import br.com.flexait.crud.dao.Dao;
+import br.com.flexait.crud.model.IModel;
 
 public abstract class AbstractController<T extends IModel> {
 
