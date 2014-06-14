@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaQuery;
 
 @Named("dao")
@@ -22,21 +23,35 @@ public class CrudDao<T> {
 	}
 	
 	public T get(Long id) {
-		return em.find(clazz, id);
+		return em().find(clazz, id);
 	}
 	
 	public T save(T model) {
-		return em.merge(model);
+		return em().merge(model);
 	}
 
 	public List<T> all() {
-		CriteriaQuery<T> criteria = em.getCriteriaBuilder().createQuery(clazz);
+		CriteriaQuery<T> criteria = em().getCriteriaBuilder().createQuery(clazz);
 		criteria.select(criteria.from(clazz));
-		return em.createQuery(criteria).getResultList();
+		return em().createQuery(criteria).getResultList();
 	}
 
 	public void remove(Long id) {
-		em.remove(get(id));	
+		em().remove(get(id));	
+	}
+
+	public EntityManager em() {
+		return em;
+	}
+
+	public EntityTransaction tx() {
+		return em().getTransaction();
+	}
+
+	public EntityTransaction beginTransaction() {
+		EntityTransaction tx = em().getTransaction();
+		tx.begin();
+		return tx;
 	}
 	
 }

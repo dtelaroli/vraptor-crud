@@ -30,7 +30,7 @@ public class ModelTest {
 
 	private ModelImpl buildModel() {
 		ModelImpl model = new ModelImpl();
-		model.name = "Foo";
+		model.setName("Foo");
 		return model;
 	}
 
@@ -63,7 +63,7 @@ public class ModelTest {
 		assertThat(merged.getUpdatedAt(), notNullValue());
 		assertThat(createdAt, notNullValue());
 		
-		merged.name = "Bar";
+		merged.setName("Bar");
 		merged = jpa.begin().merge(merged);
 		jpa.commit();
 		
