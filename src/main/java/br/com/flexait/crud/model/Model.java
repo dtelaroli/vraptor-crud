@@ -10,7 +10,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 public abstract class Model implements IModel {
@@ -21,12 +20,10 @@ public abstract class Model implements IModel {
 	protected Long id;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
 	@Column(updatable = false)
 	private Calendar createdAt;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
 	private Calendar updatedAt;
 	
 	public Model() {
