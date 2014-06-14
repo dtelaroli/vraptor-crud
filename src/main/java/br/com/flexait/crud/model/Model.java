@@ -2,6 +2,8 @@ package br.com.flexait.crud.model;
 
 import java.util.Calendar;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,8 +12,10 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
+@Access(AccessType.FIELD)
 public abstract class Model implements IModel {
 
 	private static final long serialVersionUID = 2150386543436864041L;
@@ -21,10 +25,12 @@ public abstract class Model implements IModel {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(updatable = false)
-	private Calendar createdAt;
+	@NotNull
+	protected Calendar createdAt;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar updatedAt;
+	@NotNull
+	protected Calendar updatedAt;
 	
 	public Model() {
 	}
@@ -32,7 +38,7 @@ public abstract class Model implements IModel {
 	public Model(Long id) {
 		this.id = id;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -57,6 +63,7 @@ public abstract class Model implements IModel {
 	@PrePersist
 	public void beforeInsert() {
 		createdAt = Calendar.getInstance();
+		beforeUpdate();
 	}
 	
 	@PreUpdate
