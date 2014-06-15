@@ -1,4 +1,4 @@
-package br.com.flexait.crud.components;
+package br.com.flexait.crud.component;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Specializes;
