@@ -14,7 +14,6 @@ public class CrudDao<T> {
 	@Inject private EntityManager em;
 	private Class<T> clazz;
 	
-	@Deprecated
 	public CrudDao() {
 	}
 	

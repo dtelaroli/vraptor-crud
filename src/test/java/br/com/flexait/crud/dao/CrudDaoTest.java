@@ -1,4 +1,4 @@
-package br.com.flexait.crud.model;
+package br.com.flexait.crud.dao;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -22,6 +22,7 @@ import br.com.flexait.cdi.integration.Db;
 import br.com.flexait.crud.dao.CrudDao;
 import br.com.flexait.crud.dao.Dao;
 import br.com.flexait.crud.dao.DaoProducer;
+import br.com.flexait.crud.model.ModelImpl;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses({DaoProducer.class})
