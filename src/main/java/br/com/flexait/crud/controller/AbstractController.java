@@ -14,7 +14,11 @@ public abstract class AbstractController<T extends IModel> {
 	@Inject private Result result;
 	
 	public AbstractController() {
-		
+	}
+	
+	public AbstractController(Result result, CrudDao<T> dao) {
+		this.result = result;
+		this.dao = dao;
 	}
 	
 	protected CrudDao<T> dao() {

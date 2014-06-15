@@ -6,12 +6,18 @@ import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
+import br.com.caelum.vraptor.Result;
+import br.com.flexait.crud.dao.CrudDao;
 import br.com.flexait.crud.model.IModel;
 
 public abstract class CrudController<T extends IModel> extends AbstractController<T> {
 
 	public CrudController() {
 		super();
+	}
+	
+	public CrudController(Result result, CrudDao<T> dao) {
+		super(result, dao);
 	}
 	
 	@Get("/")
@@ -38,11 +44,11 @@ public abstract class CrudController<T extends IModel> extends AbstractControlle
 	public void create(T model)  {
 		model = dao().save(model);
 		
-		result().redirectTo(this).edit(model.getId());
+		result().redirectTo(this).show(model.getId());
 	}
 	
 	@Put("/{id}")
-	public void update(Long id, T model) {
+	public void update(T model) {
 		create(model);
 	}
 	
