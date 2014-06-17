@@ -10,6 +10,9 @@ import br.com.flexait.crud.observer.redirect.RedirectToShow;
 @Controller
 public class CrudControllerImpl extends CrudController<ModelImpl>{
 
+	/**
+	 * @deprecated CDI eyes only
+	 */
 	public CrudControllerImpl() {
 	}
 	

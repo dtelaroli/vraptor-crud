@@ -13,6 +13,9 @@ public abstract class AbstractController<T extends IModel> {
 	
 	@Inject private Result result;
 	
+	/**
+	 * @deprecated CDI eyes only
+	 */
 	public AbstractController() {
 	}
 	

@@ -1,46 +1,36 @@
 package br.com.flexait.crud.observer.redirect;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
-import br.com.caelum.vraptor.InterceptionException;
-import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.controller.ControllerMethod;
-import br.com.caelum.vraptor.core.InterceptorStack;
-import br.com.caelum.vraptor.interceptor.Interceptor;
-import br.com.flexait.crud.controller.CrudController;
+import br.com.caelum.vraptor.core.MethodInfo;
 import br.com.flexait.crud.model.IModel;
 
-@Intercepts
-public class RedirectToEditObserver implements Interceptor {
+@ApplicationScoped
+public class RedirectToEditObserver extends AbstractRedirect {
 
-	private Result result;
-	private HttpServletRequest request;
-
+	/**
+	 * @deprecated CDI eyes only
+	 */
 	public RedirectToEditObserver() {
 	}
 	
 	@Inject
-	public RedirectToEditObserver(Result result, HttpServletRequest request) {
-		this.result = result;
-		this.request = request;
-	}
-	
-	@Override
-	public void intercept(InterceptorStack stack, ControllerMethod method,
-			Object controllerInstance) throws InterceptionException {
-		CrudController<? extends IModel> controller = (CrudController<?>) controllerInstance;
-		result.redirectTo(controller.getClass()).edit(getId());
-	}
-
-	private Long getId() {
-		return (Long) request.getAttribute("model.id");
+	public RedirectToEditObserver(Result result) {
+		super(result);
 	}
 
 	@Override
 	public boolean accepts(ControllerMethod method) {
 		return method.containsAnnotation(RedirectToEdit.class);
+	}
+	
+	@Override
+	public void redirect(MethodInfo methodInfo) {
+		IModel model = (IModel) methodInfo.getResult();
+		result().redirectTo(getController(methodInfo)).edit(model.getId());
 	}
 
 }

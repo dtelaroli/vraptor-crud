@@ -1,34 +1,24 @@
 package br.com.flexait.crud.observer.redirect;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import br.com.caelum.vraptor.InterceptionException;
-import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.controller.ControllerMethod;
-import br.com.caelum.vraptor.core.InterceptorStack;
-import br.com.caelum.vraptor.interceptor.Interceptor;
-import br.com.flexait.crud.controller.CrudController;
-import br.com.flexait.crud.model.IModel;
+import br.com.caelum.vraptor.core.MethodInfo;
 
-@Intercepts
-public class RedirectToIndexObserver implements Interceptor {
+@ApplicationScoped
+public class RedirectToIndexObserver extends AbstractRedirect {
 
-	private Result result;
-
+	/**
+	 * @deprecated CDI eyes only
+	 */
 	public RedirectToIndexObserver() {
 	}
 	
 	@Inject
 	public RedirectToIndexObserver(Result result) {
-		this.result = result;
-	}
-	
-	@Override
-	public void intercept(InterceptorStack stack, ControllerMethod method,
-			Object controllerInstance) throws InterceptionException {
-		CrudController<? extends IModel> controller = (CrudController<?>) controllerInstance;
-		result.redirectTo(controller.getClass()).index();
+		super(result);
 	}
 
 	@Override
@@ -38,6 +28,11 @@ public class RedirectToIndexObserver implements Interceptor {
 
 	private boolean isDestroy(ControllerMethod method) {
 		return method.getMethod().getName().equals("destroy");
+	}
+
+	@Override
+	public void redirect(MethodInfo methodInfo) {
+		result().redirectTo(getController(methodInfo)).index();
 	}
 
 }

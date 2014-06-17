@@ -12,6 +12,9 @@ import br.com.flexait.crud.model.IModel;
 
 public abstract class CrudController<T extends IModel> extends AbstractController<T> {
 
+	/**
+	 * @deprecated CDI eyes only
+	 */
 	public CrudController() {
 		super();
 	}
@@ -41,13 +44,13 @@ public abstract class CrudController<T extends IModel> extends AbstractControlle
 	}
 	
 	@Post("/")
-	public void create(T model)  {
-		model = dao().save(model);
+	public T create(T model)  {
+		return dao().save(model);
 	}
 	
 	@Put("/{id}")
-	public void update(T model) {
-		create(model);
+	public T update(T model) {
+		return create(model);
 	}
 	
 	@Delete("/{id}")
