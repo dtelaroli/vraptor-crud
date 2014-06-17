@@ -3,6 +3,7 @@ package br.com.flexait.crud.observer.redirect;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import br.com.caelum.vraptor.AfterCall;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.controller.ControllerMethod;
 import br.com.caelum.vraptor.core.MethodInfo;
@@ -30,6 +31,7 @@ public class RedirectToIndexObserver extends AbstractRedirect {
 		return method.getMethod().getName().equals("destroy");
 	}
 
+	@AfterCall
 	@Override
 	public void redirect(MethodInfo methodInfo) {
 		result().redirectTo(getController(methodInfo)).index();

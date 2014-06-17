@@ -12,9 +12,7 @@ import br.com.flexait.crud.model.IModel;
 
 public abstract class CrudController<T extends IModel> extends AbstractController<T> {
 
-	/**
-	 * @deprecated CDI eyes only
-	 */
+	@SuppressWarnings("deprecation")
 	public CrudController() {
 		super();
 	}
