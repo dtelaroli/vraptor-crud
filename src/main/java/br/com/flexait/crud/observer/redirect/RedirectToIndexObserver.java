@@ -1,7 +1,6 @@
 package br.com.flexait.crud.observer.redirect;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.Intercepts;
@@ -13,34 +12,32 @@ import br.com.flexait.crud.controller.CrudController;
 import br.com.flexait.crud.model.IModel;
 
 @Intercepts
-public class RedirectToEditInterceptor implements Interceptor {
+public class RedirectToIndexObserver implements Interceptor {
 
 	private Result result;
-	private HttpServletRequest request;
 
-	public RedirectToEditInterceptor() {
+	public RedirectToIndexObserver() {
 	}
 	
 	@Inject
-	public RedirectToEditInterceptor(Result result, HttpServletRequest request) {
+	public RedirectToIndexObserver(Result result) {
 		this.result = result;
-		this.request = request;
 	}
 	
 	@Override
 	public void intercept(InterceptorStack stack, ControllerMethod method,
 			Object controllerInstance) throws InterceptionException {
 		CrudController<? extends IModel> controller = (CrudController<?>) controllerInstance;
-		result.redirectTo(controller.getClass()).edit(getId());
-	}
-
-	private Long getId() {
-		return (Long) request.getAttribute("model.id");
+		result.redirectTo(controller.getClass()).index();
 	}
 
 	@Override
 	public boolean accepts(ControllerMethod method) {
-		return method.containsAnnotation(RedirectToEdit.class);
+		return method.containsAnnotation(RedirectToIndex.class) || isDestroy(method);
+	}
+
+	private boolean isDestroy(ControllerMethod method) {
+		return method.getMethod().getName().equals("destroy");
 	}
 
 }
