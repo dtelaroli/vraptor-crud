@@ -23,20 +23,23 @@ public class ModelTest {
 	@Inject ContextController ctx;
 	@Inject Jpa jpa;
 	
+	public ModelTest() {
+	}
+	
 	@Before
 	public void setUp() throws Exception {
 		ctx.openRequest();
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		ctx.closeRequest();
+	}
+	
 	private ModelImpl buildModel() {
 		ModelImpl model = new ModelImpl();
 		model.setName("Foo");
 		return model;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		ctx.closeRequest();
 	}
 	
 	@Test

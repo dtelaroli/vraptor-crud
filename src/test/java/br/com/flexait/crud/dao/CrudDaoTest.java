@@ -31,6 +31,9 @@ public class CrudDaoTest {
 	@Inject Db db;
 	@Inject @Dao CrudDao<ModelImpl> dao;
 	
+	public CrudDaoTest() {
+	}
+	
 	@Before
 	public void setUp() throws Exception {
 		db.init(ModelImpl.class);
