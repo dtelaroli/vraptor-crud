@@ -63,34 +63,25 @@ public class CrudControllerTest {
 
 	@Test
 	public void shouldRedirectToShowAfterCreate() {
-		CrudControllerImpl spy = spy(controller);
-		when(result.redirectTo(CrudControllerImpl.class)).thenReturn(spy);
-		
 		ModelImpl m = new ModelImpl();
 		m.setName("Name");
 		
 		controller.create(m);
-		verify(spy).show(1L);
+		verify(dao).save(m);
 	}
 	
 	@Test
 	public void shouldRedirectToShowAfterUpdate() {
-		CrudControllerImpl spy = spy(controller);
-		when(result.redirectTo(CrudControllerImpl.class)).thenReturn(spy);
-		
 		ModelImpl m = new ModelImpl();
 		m.setName("Name");
 		
 		controller.update(m);
-		verify(spy).show(1L);
+		verify(dao).save(m);
 	}
 	
 	@Test
 	public void shouldRedirectToIndexAfterDestroy() {
-		CrudControllerImpl spy = spy(controller);
-		when(result.redirectTo(CrudControllerImpl.class)).thenReturn(spy);
-		
 		controller.destroy(1L);
-		verify(spy).index();
+		verify(dao).remove(1L);
 	}
 }

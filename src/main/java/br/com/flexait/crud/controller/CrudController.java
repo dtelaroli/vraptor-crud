@@ -43,8 +43,6 @@ public abstract class CrudController<T extends IModel> extends AbstractControlle
 	@Post("/")
 	public void create(T model)  {
 		model = dao().save(model);
-		
-		result().redirectTo(this).show(model.getId());
 	}
 	
 	@Put("/{id}")
@@ -55,8 +53,6 @@ public abstract class CrudController<T extends IModel> extends AbstractControlle
 	@Delete("/{id}")
 	public void destroy(Long id) {
 		dao().remove(id);
-		
-		result().redirectTo(this).index();
 	}
 	
 }
