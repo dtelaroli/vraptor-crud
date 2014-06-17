@@ -2,10 +2,10 @@ package br.com.flexait.crud.controller;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Result;
 import br.com.flexait.crud.dao.CrudDao;
-import br.com.flexait.crud.interceptor.redirect.RedirectToEdit;
-import br.com.flexait.crud.interceptor.redirect.RedirectToIndex;
-import br.com.flexait.crud.interceptor.redirect.RedirectToShow;
 import br.com.flexait.crud.model.ModelImpl;
+import br.com.flexait.crud.observer.redirect.RedirectToEdit;
+import br.com.flexait.crud.observer.redirect.RedirectToIndex;
+import br.com.flexait.crud.observer.redirect.RedirectToShow;
 
 @Controller
 public class CrudControllerImpl extends CrudController<ModelImpl>{

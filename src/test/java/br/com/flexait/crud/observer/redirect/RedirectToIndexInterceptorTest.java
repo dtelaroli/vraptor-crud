@@ -1,4 +1,4 @@
-package br.com.flexait.crud.interceptor.redirect;
+package br.com.flexait.crud.observer.redirect;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -18,6 +18,7 @@ import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.flexait.crud.controller.CrudControllerImpl;
 import br.com.flexait.crud.dao.CrudDao;
 import br.com.flexait.crud.model.ModelImpl;
+import br.com.flexait.crud.observer.redirect.RedirectToIndexInterceptor;
 
 public class RedirectToIndexInterceptorTest {
 

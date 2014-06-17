@@ -1,4 +1,4 @@
-package br.com.flexait.crud.interceptor.redirect;
+package br.com.flexait.crud.observer.redirect;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -7,8 +7,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpServletRequest;
-
-import net.vidageek.mirror.dsl.Mirror;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,10 +20,11 @@ import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.flexait.crud.controller.CrudControllerImpl;
 import br.com.flexait.crud.dao.CrudDao;
 import br.com.flexait.crud.model.ModelImpl;
+import br.com.flexait.crud.observer.redirect.RedirectToEditInterceptor;
 
-public class RedirectToShowInterceptorTest {
+public class RedirectToEditInterceptorTest {
 
-	RedirectToShowInterceptor interceptor;
+	RedirectToEditInterceptor interceptor;
 	CrudControllerImpl controller;
 	Result result;
 	@Mock CrudDao<ModelImpl> dao;
@@ -38,41 +37,34 @@ public class RedirectToShowInterceptorTest {
 		
 		when(request.getAttribute("model.id")).thenReturn(1L);
 		
-		interceptor = new RedirectToShowInterceptor(result, request);
+		interceptor = new RedirectToEditInterceptor(result, request);
 		controller = new CrudControllerImpl(result, dao);
 	}
 
 	@Test
-	public void shouldAcceptIfNameIsDestroyWithoutAnnotation() throws NoSuchMethodException, SecurityException {
-		ControllerMethod method = DefaultControllerMethod.instanceFor(CrudControllerImpl.class, new Mirror().on(CrudControllerImpl.class).reflect().method("create").withAnyArgs());
-
-		assertThat(interceptor.accepts(method), equalTo(true));
-	}
-	
-	@Test
-	public void shouldNotAcceptIfNameIsIndexWithoutAnnotation() throws NoSuchMethodException, SecurityException {
-		ControllerMethod method = DefaultControllerMethod.instanceFor(CrudControllerImpl.class, CrudControllerImpl.class.getMethod("index"));
+	public void shouldNotAcceptWithAnnotation() throws NoSuchMethodException, SecurityException {
+		ControllerMethod method = DefaultControllerMethod.instanceFor(CrudControllerImpl.class, CrudControllerImpl.class.getMethod("toShow"));
 
 		assertThat(interceptor.accepts(method), equalTo(false));
 	}
 	
 	@Test
 	public void shouldAcceptWithAnnotationRedirectToShow() throws NoSuchMethodException, SecurityException {
-		ControllerMethod method = DefaultControllerMethod.instanceFor(CrudControllerImpl.class, new Mirror().on(CrudControllerImpl.class).reflect().method("toShow").withAnyArgs());
+		ControllerMethod method = DefaultControllerMethod.instanceFor(CrudControllerImpl.class, CrudControllerImpl.class.getMethod("toEdit"));
 
 		assertThat(interceptor.accepts(method), equalTo(true));
 	}
 	
 	@Test
-	public void shouldRedirectToShow() throws NoSuchMethodException, SecurityException {
-		ControllerMethod method = DefaultControllerMethod.instanceFor(CrudControllerImpl.class, CrudControllerImpl.class.getMethod("toShow"));
+	public void shouldRedirectToEdit() throws NoSuchMethodException, SecurityException {
+		ControllerMethod method = DefaultControllerMethod.instanceFor(CrudControllerImpl.class, CrudControllerImpl.class.getMethod("toEdit"));
 		
 		CrudControllerImpl spy = spy(controller);
 		
 		when(result.redirectTo(CrudControllerImpl.class)).thenReturn(spy);
 		
 		interceptor.intercept(null, method, controller);
-		verify(spy).show(1L);
+		verify(spy).edit(1L);
 	}
 
 }

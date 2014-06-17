@@ -1,4 +1,4 @@
-package br.com.flexait.crud.interceptor.redirect;
+package br.com.flexait.crud.observer.redirect;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -13,16 +13,16 @@ import br.com.flexait.crud.controller.CrudController;
 import br.com.flexait.crud.model.IModel;
 
 @Intercepts
-public class RedirectToShowInterceptor implements Interceptor {
+public class RedirectToEditInterceptor implements Interceptor {
 
 	private Result result;
 	private HttpServletRequest request;
 
-	public RedirectToShowInterceptor() {
+	public RedirectToEditInterceptor() {
 	}
 	
 	@Inject
-	public RedirectToShowInterceptor(Result result, HttpServletRequest request) {
+	public RedirectToEditInterceptor(Result result, HttpServletRequest request) {
 		this.result = result;
 		this.request = request;
 	}
@@ -31,7 +31,7 @@ public class RedirectToShowInterceptor implements Interceptor {
 	public void intercept(InterceptorStack stack, ControllerMethod method,
 			Object controllerInstance) throws InterceptionException {
 		CrudController<? extends IModel> controller = (CrudController<?>) controllerInstance;
-		result.redirectTo(controller.getClass()).show(getId());
+		result.redirectTo(controller.getClass()).edit(getId());
 	}
 
 	private Long getId() {
@@ -40,12 +40,7 @@ public class RedirectToShowInterceptor implements Interceptor {
 
 	@Override
 	public boolean accepts(ControllerMethod method) {
-		return method.containsAnnotation(RedirectToShow.class) || isSave(method);
-	}
-
-	private boolean isSave(ControllerMethod method) {
-		String name = method.getMethod().getName();
-		return name.equals("update") || name.equals("create");
+		return method.containsAnnotation(RedirectToEdit.class);
 	}
 
 }

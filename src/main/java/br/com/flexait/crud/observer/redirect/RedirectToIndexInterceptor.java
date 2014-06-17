@@ -1,4 +1,4 @@
-package br.com.flexait.crud.interceptor.redirect;
+package br.com.flexait.crud.observer.redirect;
 
 import javax.inject.Inject;
 
