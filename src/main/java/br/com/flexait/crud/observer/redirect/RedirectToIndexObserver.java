@@ -23,11 +23,7 @@ public class RedirectToIndexObserver extends AbstractRedirect {
 
 	@Override
 	public boolean accepts(ControllerMethod method) {
-		return method.containsAnnotation(RedirectToIndex.class) || isDestroy(method);
-	}
-
-	private boolean isDestroy(ControllerMethod method) {
-		return method.getMethod().getName().equals("destroy");
+		return method.containsAnnotation(RedirectToIndex.class);
 	}
 
 	@Override

@@ -60,13 +60,6 @@ public class RedirectToShowObserverTest {
 	}
 
 	@Test
-	public void shouldAcceptIfNameIsDestroyWithoutAnnotation() throws NoSuchMethodException, SecurityException {
-		ControllerMethod method = DefaultControllerMethod.instanceFor(CrudControllerImpl.class, new Mirror().on(CrudControllerImpl.class).reflect().method("create").withAnyArgs());
-
-		assertThat(observer.accepts(method), equalTo(true));
-	}
-	
-	@Test
 	public void shouldNotAcceptIfNameIsIndexWithoutAnnotation() throws NoSuchMethodException, SecurityException {
 		ControllerMethod method = DefaultControllerMethod.instanceFor(CrudControllerImpl.class, CrudControllerImpl.class.getMethod("index"));
 

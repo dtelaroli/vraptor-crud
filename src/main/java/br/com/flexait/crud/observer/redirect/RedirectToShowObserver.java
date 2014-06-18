@@ -22,12 +22,7 @@ public class RedirectToShowObserver extends AbstractRedirect {
 	
 	@Override
 	public boolean accepts(ControllerMethod method) {
-		return method.containsAnnotation(RedirectToShow.class) || isSave(method);
-	}
-
-	private boolean isSave(ControllerMethod method) {
-		String name = method.getMethod().getName();
-		return name.equals("update") || name.equals("create");
+		return method.containsAnnotation(RedirectToShow.class);
 	}
 
 	@Override
