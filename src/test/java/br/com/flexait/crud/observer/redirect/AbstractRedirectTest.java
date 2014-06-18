@@ -64,7 +64,7 @@ public class AbstractRedirectTest {
 
 	@Test
 	public void shouldExecuteRedirectWithoutArgs() throws NoSuchMethodException, SecurityException {
-		observer.observe(new MethodExecuted(controllerMethod, methodInfo), methodInfo);
+		observer.observe(new MethodExecuted(controllerMethod, methodInfo), result, methodInfo);
 		
 		verify(observer).redirect(methodInfo);
 	}
@@ -78,7 +78,7 @@ public class AbstractRedirectTest {
 	public void shouldNotExecuteIfNotAccept() {
 		when(observer.accepts(any(ControllerMethod.class))).thenReturn(false);
 		
-		observer.observe(new MethodExecuted(controllerMethod, methodInfo), methodInfo);
+		observer.observe(new MethodExecuted(controllerMethod, methodInfo), result, methodInfo);
 		
 		verify(observer, never()).redirect(any(MethodInfo.class));
 	}
