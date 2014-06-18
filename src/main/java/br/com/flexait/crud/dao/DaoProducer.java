@@ -11,15 +11,8 @@ import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
 
-import org.jglue.cdiunit.AdditionalClasses;
-
-import br.com.caelum.vraptor.environment.ServletBasedEnvironment;
-import br.com.caelum.vraptor.jpa.EntityManagerCreator;
-import br.com.caelum.vraptor.jpa.EntityManagerFactoryCreator;
 import br.com.flexait.crud.model.IModel;
 
-@AdditionalClasses({EntityManagerCreator.class, 
-	EntityManagerFactoryCreator.class, ServletBasedEnvironment.class})
 public class DaoProducer implements Serializable {
 	
 	private static final long serialVersionUID = -1209520122539570918L;
