@@ -59,7 +59,7 @@
 			<groupId>br.com.flexait</groupId>
 			<artifactId>cdi-test</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<optional>true</optional>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>br.com.caelum</groupId>
@@ -139,7 +139,8 @@
 						<configuration>
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
-									<resource>src/test/resources/META-INF/persistence.xml</resource>
+									<resource>*.xml</resource>
+									<resource>*.properties</resource>
 								</transformer>
 							</transformers>
 						</configuration>
