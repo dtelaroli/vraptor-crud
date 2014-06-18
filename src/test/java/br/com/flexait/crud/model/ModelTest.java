@@ -71,6 +71,6 @@ public class ModelTest {
 		jpa.commit();
 		
 		assertThat(merged.getUpdatedAt(), notNullValue());
-		assertThat(merged.getCreatedAt(), equalTo(createdAt));
+		assertThat(merged.getCreatedAt().getTime().toString(), equalTo(createdAt.getTime().toString()));
 	}
 }

@@ -33,6 +33,7 @@ public abstract class Model implements IModel {
 	protected Calendar updatedAt;
 	
 	public Model() {
+		this(null);
 	}
 	
 	public Model(Long id) {
@@ -60,14 +61,9 @@ public abstract class Model implements IModel {
 		return "Model [id=" + id + "]";
 	}
 	
-	@PrePersist
-	public void beforeInsert() {
+	@PrePersist @PreUpdate
+	public void beforeSave() {
 		createdAt = Calendar.getInstance();
-		beforeUpdate();
-	}
-	
-	@PreUpdate
-	public void beforeUpdate() {
 		updatedAt = Calendar.getInstance();
 	}
 	
