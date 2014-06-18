@@ -1,4 +1,4 @@
 <dataset>
-    <ModelImpl name="John"/>
-    <ModelImpl name="Petter"/>
+    <ModelImpl name="John" createdAt="2014-01-01" updatedAt="2014-01-01"/>
+    <ModelImpl name="Petter" createdAt="2014-01-01" updatedAt="2014-01-01"/>
 </dataset>
