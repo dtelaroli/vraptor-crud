@@ -4,6 +4,7 @@
 .externalToolBuilders
 target
 build
+dependency-reduced-pom.xml
 **/.settings
 **/.project
 **/.classpath
