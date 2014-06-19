@@ -23,7 +23,7 @@ public abstract class AbstractRedirect {
 		this.result = result;
 	}
 
-	public void observe(@Observes MethodExecuted event, Result result, MethodInfo methodInfo) {
+	public void observe(@Observes MethodExecuted event, MethodInfo methodInfo) {
 		if(accepts(methodInfo.getControllerMethod())) {
 			redirect(methodInfo);
 		}
