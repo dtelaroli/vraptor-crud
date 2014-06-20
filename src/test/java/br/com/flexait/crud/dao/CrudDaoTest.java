@@ -4,13 +4,17 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
 
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.validation.ConstraintViolationException;
 
+import org.jglue.cdiunit.ActivatedAlternatives;
 import org.jglue.cdiunit.AdditionalClasses;
 import org.jglue.cdiunit.CdiRunner;
 import org.junit.After;
@@ -18,25 +22,28 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import br.com.caelum.vraptor.validator.Validator;
 import br.com.flexait.cdi.integration.Db;
-import br.com.flexait.crud.dao.CrudDao;
-import br.com.flexait.crud.dao.Dao;
-import br.com.flexait.crud.dao.DaoProducer;
+import br.com.flexait.cdi.integration.Jpa;
+import br.com.flexait.crud.MockValidator;
 import br.com.flexait.crud.model.ModelImpl;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses({DaoProducer.class})
+@ActivatedAlternatives(MockValidator.class)
 public class CrudDaoTest {
 
 	@Inject Db db;
+	@Inject Jpa jpa;
 	@Inject @Dao CrudDao<ModelImpl> dao;
-	
-	public CrudDaoTest() {
-	}
+	Validator validator;
+	EntityManager em;
 	
 	@Before
 	public void setUp() throws Exception {
 		db.init(ModelImpl.class);
+		validator = spy(dao.validator());
+		em = spy(dao.em());
 	}
 
 	@After
@@ -50,17 +57,8 @@ public class CrudDaoTest {
 	}
 	
 	@Test
-	public void shouldReturnTransactionInstance() {
-		EntityTransaction tx = dao.tx();
-		assertThat(tx, instanceOf(EntityTransaction.class));
-		assertThat(tx.isActive(), equalTo(false));
-	}
-	
-	@Test
-	public void shouldReturnTransactionActive() {
-		EntityTransaction tx = dao.beginTransaction();
-		assertThat(tx.isActive(), equalTo(true));
-		tx.rollback();
+	public void shouldReturnValidatorInstance() {
+		assertThat(dao.validator(), instanceOf(MockValidator.class));
 	}
 	
 	@Test
@@ -80,7 +78,7 @@ public class CrudDaoTest {
 
 	@Test
 	public void shouldSaveAModel() {
-		EntityTransaction tx = dao.beginTransaction();
+		EntityTransaction tx = jpa.beginTransaction();
 		
 		ModelImpl model = new ModelImpl();
 		model.setName("Maria");
@@ -91,9 +89,29 @@ public class CrudDaoTest {
 		assertThat(saved.getId(), equalTo(3L));
 	}
 	
+	@Test(expected = Exception.class)
+	public void shouldDispatchValidationError() {
+		EntityTransaction tx = jpa.beginTransaction();
+		
+		ModelImpl model = new ModelImpl();
+		
+		dao.save(model);
+		tx.commit();
+	}
+	
+	@Test(expected = ConstraintViolationException.class)
+	public void shouldAbortSaveIfInvalid() {
+		doThrow(new RuntimeException()).when(validator).onErrorSendBadRequest();
+		
+		EntityTransaction tx = jpa.beginTransaction();
+		ModelImpl model = new ModelImpl();
+		dao.save(model);
+		tx.rollback();
+	}
+	
 	@Test
 	public void shouldRemoveModel1() {
-		EntityTransaction tx = dao.beginTransaction();
+		EntityTransaction tx = jpa.beginTransaction();
 		
 		List<ModelImpl> all = dao.all();
 		assertThat(all.size(), equalTo(2));
