@@ -12,7 +12,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
@@ -25,11 +24,9 @@ public abstract class Model implements IModel {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(updatable = false)
-	@NotNull
 	protected Calendar createdAt;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
 	protected Calendar updatedAt;
 	
 	public Model() {

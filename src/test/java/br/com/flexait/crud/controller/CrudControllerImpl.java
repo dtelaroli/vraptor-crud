@@ -1,6 +1,7 @@
 package br.com.flexait.crud.controller;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Validator;
 import br.com.flexait.crud.dao.CrudDao;
 import br.com.flexait.crud.model.ModelImpl;
 import br.com.flexait.crud.observer.redirect.RedirectToEdit;
@@ -16,8 +17,8 @@ public class CrudControllerImpl extends CrudController<ModelImpl>{
 	public CrudControllerImpl() {
 	}
 	
-	public CrudControllerImpl(Result result, CrudDao<ModelImpl> dao) {
-		super(result, dao);
+	public CrudControllerImpl(Result result, CrudDao<ModelImpl> dao, Validator validator) {
+		super(result, dao, validator);
 	}
 
 	@Override
@@ -38,4 +39,5 @@ public class CrudControllerImpl extends CrudController<ModelImpl>{
 	@RedirectToEdit
 	public void toEdit() {
 	}
+
 }

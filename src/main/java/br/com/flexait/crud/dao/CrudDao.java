@@ -5,7 +5,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaQuery;
 
 @Named("dao")
@@ -43,14 +42,4 @@ public class CrudDao<T> {
 		return em;
 	}
 
-	public EntityTransaction tx() {
-		return em().getTransaction();
-	}
-
-	public EntityTransaction beginTransaction() {
-		EntityTransaction tx = em().getTransaction();
-		tx.begin();
-		return tx;
-	}
-	
 }

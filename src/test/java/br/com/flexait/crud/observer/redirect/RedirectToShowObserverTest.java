@@ -24,6 +24,7 @@ import br.com.caelum.vraptor.controller.ControllerMethod;
 import br.com.caelum.vraptor.controller.DefaultControllerInstance;
 import br.com.caelum.vraptor.controller.DefaultControllerMethod;
 import br.com.caelum.vraptor.core.MethodInfo;
+import br.com.caelum.vraptor.validator.Validator;
 import br.com.flexait.crud.controller.CrudControllerImpl;
 import br.com.flexait.crud.dao.CrudDao;
 import br.com.flexait.crud.model.ModelImpl;
@@ -39,6 +40,7 @@ public class RedirectToShowObserverTest {
 	Method method;
 	@Mock MethodInfo methodInfo;
 	@Mock ControllerMethod controllerMethod;
+	@Mock Validator validator;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -46,7 +48,7 @@ public class RedirectToShowObserverTest {
 		object = new ModelImpl();
 		object.setId(1L);
 		
-		controller = new CrudControllerImpl(result, dao);
+		controller = new CrudControllerImpl(result, dao, validator);
 		
 		method = CrudControllerImpl.class.getMethod("toEdit");
 		

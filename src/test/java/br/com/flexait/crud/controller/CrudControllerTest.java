@@ -1,6 +1,7 @@
 package br.com.flexait.crud.controller;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
@@ -18,6 +19,10 @@ import org.mockito.MockitoAnnotations;
 
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.util.test.MockResult;
+import br.com.caelum.vraptor.util.test.MockValidator;
+import br.com.caelum.vraptor.util.test.MockedLogic;
+import br.com.caelum.vraptor.validator.Validator;
+import br.com.caelum.vraptor.view.LogicResult;
 import br.com.flexait.crud.dao.CrudDao;
 import br.com.flexait.crud.model.ModelImpl;
 
@@ -25,13 +30,15 @@ public class CrudControllerTest {
 
 	CrudControllerImpl controller;
 	@Mock CrudDao<ModelImpl> dao;
+	Validator validator;
 	Result result;
 	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		result = spy(new MockResult());
-		controller = new CrudControllerImpl(result, dao);
+		validator = new MockValidator();
+		controller = new CrudControllerImpl(result, dao, validator);
 		
 		ModelImpl model = new ModelImpl();
 		model.setId(1L);
@@ -41,6 +48,7 @@ public class CrudControllerTest {
 		when(dao.all()).thenReturn(list);
 		when(dao.get(anyLong())).thenReturn(model);
 		when(dao.save(any(ModelImpl.class))).thenReturn(model);
+		when(result.use(LogicResult.class)).thenReturn(new MockedLogic());
 	}
 	
 	@Test
@@ -84,4 +92,10 @@ public class CrudControllerTest {
 		controller.destroy(1L);
 		verify(dao).remove(1L);
 	}
+	
+	@Test
+	public void shouldReturnValidatorInstance() {
+		assertThat(controller.validator(), instanceOf(Validator.class));
+	}
+	
 }

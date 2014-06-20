@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThat;
 import java.util.Calendar;
 
 import javax.inject.Inject;
+import javax.persistence.EntityTransaction;
 
 import org.jglue.cdiunit.CdiRunner;
 import org.jglue.cdiunit.ContextController;
@@ -44,31 +45,36 @@ public class ModelTest {
 	
 	@Test
 	public void shouldSaveAModelImplementation() throws Exception {
-		ModelImpl merged = jpa.begin().merge(buildModel());
-		jpa.commit();
+		EntityTransaction tx = jpa.beginTransaction();
+		
+		ModelImpl merged = jpa.em().merge(buildModel());
+		tx.commit();
 		
 		assertThat(merged.getId(), notNullValue());
 	}
 	
 	@Test
 	public void shouldConfigDateOnInsert() {
-		ModelImpl merged = jpa.begin().merge(buildModel());
-		jpa.commit();
+		EntityTransaction tx = jpa.beginTransaction();
+		ModelImpl merged = jpa.em().merge(buildModel());
+		tx.commit();
 		
 		assertThat(merged.getCreatedAt(), notNullValue());
 	}
 	
 	@Test
 	public void shouldConfigDateOnUpdate() {
-		ModelImpl merged = jpa.begin().merge(buildModel());
+		EntityTransaction tx = jpa.beginTransaction();
+		ModelImpl merged = jpa.em().merge(buildModel());
 		Calendar createdAt = merged.getCreatedAt();
-		jpa.commit();
+		tx.commit();
 		assertThat(merged.getUpdatedAt(), notNullValue());
 		assertThat(createdAt, notNullValue());
 		
+		tx.begin();
 		merged.setName("Bar");
-		merged = jpa.begin().merge(merged);
-		jpa.commit();
+		merged = jpa.em().merge(merged);
+		tx.commit();
 		
 		assertThat(merged.getUpdatedAt(), notNullValue());
 		assertThat(merged.getCreatedAt().getTime().toString(), equalTo(createdAt.getTime().toString()));
