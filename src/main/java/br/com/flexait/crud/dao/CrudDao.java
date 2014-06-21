@@ -7,13 +7,21 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
 
+import br.com.caelum.vraptor.validator.Validator;
+
 @Named("dao")
 public class CrudDao<T> {
 
 	@Inject private EntityManager em;
+	@Inject private Validator validator;
 	private Class<T> clazz;
 	
 	public CrudDao() {
+	}
+	
+	public CrudDao(EntityManager em, Validator validator) {
+		this.em = em;
+		this.validator = validator;
 	}
 	
 	public void setEntityClass(Class<T> clazz) {
@@ -25,7 +33,14 @@ public class CrudDao<T> {
 	}
 	
 	public T save(T model) {
+		validate(model);
+		
 		return em().merge(model);
+	}
+
+	public void validate(T model) {
+		validator.validate(model);
+		validator.onErrorSendBadRequest();
 	}
 
 	public List<T> all() {

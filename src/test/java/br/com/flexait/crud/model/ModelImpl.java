@@ -1,6 +1,9 @@
 package br.com.flexait.crud.model;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

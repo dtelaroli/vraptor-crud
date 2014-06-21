@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.validation.ConstraintViolationException;
 
+import org.jglue.cdiunit.ActivatedAlternatives;
 import org.jglue.cdiunit.AdditionalClasses;
 import org.jglue.cdiunit.CdiRunner;
 import org.junit.After;
@@ -23,10 +24,12 @@ import org.junit.runner.RunWith;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.flexait.cdi.integration.Db;
 import br.com.flexait.cdi.integration.Jpa;
+import br.com.flexait.crud.MockValidator;
 import br.com.flexait.crud.model.ModelImpl;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses({DaoProducer.class})
+@ActivatedAlternatives(MockValidator.class)
 public class CrudDaoTest {
 
 	@Inject Db db;
