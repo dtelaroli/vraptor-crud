@@ -9,7 +9,6 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
 
-import org.jglue.cdiunit.ActivatedAlternatives;
 import org.jglue.cdiunit.AdditionalClasses;
 import org.jglue.cdiunit.CdiRunner;
 import org.junit.Before;
@@ -21,12 +20,10 @@ import org.mockito.MockitoAnnotations;
 import br.com.caelum.vraptor.environment.ServletBasedEnvironment;
 import br.com.caelum.vraptor.jpa.EntityManagerCreator;
 import br.com.caelum.vraptor.jpa.EntityManagerFactoryCreator;
-import br.com.flexait.crud.MockValidator;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses({DaoImpl.class, EntityManagerCreator.class, 
 	EntityManagerFactoryCreator.class, ServletBasedEnvironment.class})
-@ActivatedAlternatives(MockValidator.class)
 public class DaoProducerTest {
 
 	@Inject DaoProducer producer;
