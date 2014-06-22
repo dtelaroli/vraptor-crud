@@ -70,7 +70,7 @@ public class CrudControllerTest {
 	}
 
 	@Test
-	public void shouldRedirectToShowAfterCreate() {
+	public void shouldExecuteSaveOnCreate() {
 		ModelImpl m = new ModelImpl();
 		m.setName("Name");
 		
@@ -79,7 +79,7 @@ public class CrudControllerTest {
 	}
 	
 	@Test
-	public void shouldRedirectToShowAfterUpdate() {
+	public void shouldExecuteSaveOnUpdate() {
 		ModelImpl m = new ModelImpl();
 		m.setName("Name");
 		
@@ -88,7 +88,7 @@ public class CrudControllerTest {
 	}
 	
 	@Test
-	public void shouldRedirectToIndexAfterDestroy() {
+	public void shouldExecuteRemoveOnDestroy() {
 		controller.destroy(1L);
 		verify(dao).remove(1L);
 	}
