@@ -57,7 +57,7 @@ public class CustomOutjectResult extends OutjectResult {
 
 	private String getSufix(Type type) {
 		String sufix = "";
-		if(type.getTypeName().equals("java.util.List<T>")) {
+		if(type.toString().equals("java.util.List<T>")) {
 			sufix = "List";
 		}
 		return sufix;
