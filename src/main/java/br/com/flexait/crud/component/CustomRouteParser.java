@@ -5,11 +5,12 @@ import javax.enterprise.inject.Specializes;
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.http.route.PathAnnotationRoutesParser;
 import br.com.caelum.vraptor.http.route.Router;
+import br.com.caelum.vraptor.i18n.routes.I18nRoutesParser;
+import br.com.caelum.vraptor.i18n.routes.RoutesResources;
 
-@Specializes @ApplicationScoped
-public class CustomRouteParser extends PathAnnotationRoutesParser {
+@ApplicationScoped @Specializes
+public class CustomRouteParser extends I18nRoutesParser {
  
 	/**
 	 * @deprecated CDI eyes only
@@ -18,8 +19,8 @@ public class CustomRouteParser extends PathAnnotationRoutesParser {
 	}
 	
 	@Inject
-	public CustomRouteParser(Router router) {
-		super(router);
+	public CustomRouteParser(Router router, RoutesResources routesResources) {
+		super(router, routesResources);
 	}
 	
     @Override
