@@ -17,13 +17,16 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import br.com.caelum.vraptor.environment.ServletBasedEnvironment;
+import br.com.caelum.vraptor.environment.DefaultEnvironment;
 import br.com.caelum.vraptor.jpa.EntityManagerCreator;
 import br.com.caelum.vraptor.jpa.EntityManagerFactoryCreator;
+import br.com.caelum.vraptor.proxy.JavassistProxifier;
+import br.com.caelum.vraptor.validator.DefaultValidator;
 
 @RunWith(CdiRunner.class)
 @AdditionalClasses({DaoImpl.class, EntityManagerCreator.class, 
-	EntityManagerFactoryCreator.class, ServletBasedEnvironment.class})
+	EntityManagerFactoryCreator.class, DefaultValidator.class, 
+	DefaultEnvironment.class, JavassistProxifier.class})
 public class DaoProducerTest {
 
 	@Inject DaoProducer producer;
